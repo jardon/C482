@@ -22,11 +22,11 @@
                <font>
                   <Font size="18.0" />
                </font></Label>
-            <RadioButton mnemonicParsing="false" text="In-House">
+            <RadioButton fx:id="inHouse" mnemonicParsing="false" text="In-House">
                <HBox.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="20.0" />
                </HBox.margin></RadioButton>
-            <RadioButton mnemonicParsing="false" text="Outsourced">
+            <RadioButton fx:id="outsourced" mnemonicParsing="false" text="Outsourced">
                <HBox.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="20.0" />
                </HBox.margin></RadioButton>
@@ -64,36 +64,36 @@
             </VBox>
             <VBox prefHeight="305.0" prefWidth="395.0">
                <children>
-                  <TextField>
+                  <TextField fx:id="id">
                      <VBox.margin>
                         <Insets bottom="10.0" top="10.0" />
                      </VBox.margin></TextField>
-                  <TextField>
+                  <TextField fx:id="name">
                      <VBox.margin>
                         <Insets bottom="10.0" top="10.0" />
                      </VBox.margin></TextField>
-                  <TextField>
+                  <TextField fx:id="inventory">
                      <VBox.margin>
                         <Insets bottom="10.0" top="10.0" />
                      </VBox.margin></TextField>
-                  <TextField>
+                  <TextField fx:id="price">
                      <VBox.margin>
                         <Insets bottom="10.0" top="10.0" />
                      </VBox.margin></TextField>
                   <HBox prefHeight="33.0" prefWidth="395.0">
                      <children>
-                        <TextField />
+                        <TextField fx:id="max" />
                         <Label text="Min">
                            <HBox.margin>
                               <Insets left="10.0" right="10.0" />
                            </HBox.margin></Label>
-                        <TextField />
+                        <TextField fx:id="min" />
                      </children>
                      <VBox.margin>
                         <Insets top="10.0" />
                      </VBox.margin>
                   </HBox>
-                  <TextField>
+                  <TextField fx:id="company">
                      <VBox.margin>
                         <Insets bottom="10.0" top="10.0" />
                      </VBox.margin></TextField>
@@ -103,12 +103,12 @@
       </HBox>
       <HBox layoutX="16.0" layoutY="342.0" prefHeight="55.0" prefWidth="573.0">
          <children>
-            <Button mnemonicParsing="false" text="Save">
+            <Button fx:id="save" mnemonicParsing="false" onAction="#savePartAction" text="Save">
                <HBox.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </HBox.margin>
             </Button>
-            <Button mnemonicParsing="false" text="Cancel">
+            <Button fx:id="cancel" mnemonicParsing="false" onAction="#cancelAction" text="Cancel">
                <HBox.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </HBox.margin>

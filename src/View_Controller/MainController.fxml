@@ -29,19 +29,19 @@
                      <children>
                         <HBox prefHeight="53.0" prefWidth="442.0">
                            <children>
-                              <Button mnemonicParsing="false" text="Search Parts">
+                              <Button fx:id="partSearch" mnemonicParsing="false" onAction="#searchPartsAction" text="Search Parts">
                                  <HBox.margin>
                                     <Insets bottom="10.0" left="10.0" top="10.0" />
                                  </HBox.margin>
                               </Button>
-                              <TextField>
+                              <TextField fx:id="partSearchField">
                                  <HBox.margin>
                                     <Insets bottom="10.0" left="10.0" top="10.0" />
                                  </HBox.margin>
                               </TextField>
                            </children>
                         </HBox>
-                        <TableView prefHeight="205.0" prefWidth="314.0">
+                        <TableView fx:id="partTable" prefHeight="205.0" prefWidth="314.0">
                           <columns>
                             <TableColumn prefWidth="75.0" text="Part ID" />
                             <TableColumn prefWidth="75.0" text="Part Name" />
@@ -52,17 +52,17 @@
                         </TableView>
                         <HBox prefHeight="100.0" prefWidth="200.0">
                            <children>
-                              <Button mnemonicParsing="false" onAction="#addPart" text="Add">
+                              <Button fx:id="partAdd" mnemonicParsing="false" onAction="#addPartAction" text="Add">
                                  <HBox.margin>
                                     <Insets bottom="10.0" left="10.0" top="10.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button mnemonicParsing="false" text="Modify">
+                              <Button fx:id="partModify" mnemonicParsing="false" onAction="#modifyPartAction" text="Modify">
                                  <HBox.margin>
                                     <Insets bottom="10.0" left="10.0" top="10.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button mnemonicParsing="false" text="Delete">
+                              <Button fx:id="partDelete" mnemonicParsing="false" onAction="#deletePartAction" text="Delete">
                                  <HBox.margin>
                                     <Insets bottom="10.0" left="10.0" top="10.0" />
                                  </HBox.margin>
@@ -75,19 +75,19 @@
                      <children>
                         <HBox prefHeight="52.0" prefWidth="463.0">
                            <children>
-                              <Button mnemonicParsing="false" text="Search Products">
+                              <Button fx:id="productSearch" mnemonicParsing="false" onAction="#searchProductsAction" text="Search Products">
                                  <HBox.margin>
                                     <Insets bottom="10.0" left="10.0" top="10.0" />
                                  </HBox.margin>
                               </Button>
-                              <TextField>
+                              <TextField fx:id="productSearchField">
                                  <HBox.margin>
                                     <Insets bottom="10.0" left="10.0" top="10.0" />
                                  </HBox.margin>
                               </TextField>
                            </children>
                         </HBox>
-                        <TableView prefHeight="205.0" prefWidth="291.0">
+                        <TableView fx:id="productTable" prefHeight="205.0" prefWidth="291.0">
                           <columns>
                             <TableColumn prefWidth="75.0" text="C1" />
                             <TableColumn prefWidth="75.0" text="C2" />
@@ -98,17 +98,17 @@
                         </TableView>
                         <HBox prefHeight="100.0" prefWidth="200.0">
                            <children>
-                              <Button alignment="TOP_RIGHT" mnemonicParsing="false" text="Add">
+                              <Button fx:id="productAdd" alignment="TOP_RIGHT" mnemonicParsing="false" onAction="#addProductAction" text="Add">
                                  <HBox.margin>
                                     <Insets bottom="10.0" left="10.0" top="10.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button alignment="TOP_RIGHT" mnemonicParsing="false" text="Modify">
+                              <Button fx:id="productModify" alignment="TOP_RIGHT" mnemonicParsing="false" onAction="#modifyProductAction" text="Modify">
                                  <HBox.margin>
                                     <Insets bottom="10.0" left="10.0" top="10.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button alignment="TOP_RIGHT" mnemonicParsing="false" text="Delete">
+                              <Button fx:id="productDelete" alignment="TOP_RIGHT" mnemonicParsing="false" onAction="#deleteProductAction" text="Delete">
                                  <HBox.margin>
                                     <Insets bottom="10.0" left="10.0" top="10.0" />
                                  </HBox.margin>
@@ -119,7 +119,7 @@
                   </VBox>
                </children>
             </HBox>
-            <Button mnemonicParsing="false" prefHeight="39.0" prefWidth="106.0" text="Exit">
+            <Button fx:id="exit" mnemonicParsing="false" onAction="#exitApplication" prefHeight="39.0" prefWidth="106.0" text="Exit">
                <VBox.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </VBox.margin>
