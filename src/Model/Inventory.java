@@ -7,14 +7,14 @@ import javafx.collections.ObservableList;
 
 public class Inventory {
 
-    ObservableList<Part> allParts = FXCollections.observableArrayList();
-    ObservableList<Product> allProducts = FXCollections.observableArrayList();
+    static ObservableList<Part> allParts = FXCollections.observableArrayList();
+    static ObservableList<Product> allProducts = FXCollections.observableArrayList();
 
-    public void addPart(Part part) { allParts.add(part); }
+    public static void addPart(Part part) { allParts.add(part); }
 
-    public void addProduct(Product product) { allProducts.add(product); }
+    public static void addProduct(Product product) { allProducts.add(product); }
 
-    public Part lookupPart(int partId) { 
+    public static Part lookupPart(int partId) {
         Iterator<Part> itr = allParts.listIterator();
         while(itr.hasNext()) {
             Part part = itr.next();
@@ -24,7 +24,7 @@ public class Inventory {
         throw new NoSuchElementException("Part not found");
     }
 
-    public ObservableList<Part> lookupPart(String partName) {
+    public static ObservableList<Part> lookupPart(String partName) {
         Iterator<Part> itr = allParts.listIterator();
         ObservableList<Part> subList = FXCollections.observableArrayList();
         while(itr.hasNext()) {
@@ -37,7 +37,7 @@ public class Inventory {
         throw new NoSuchElementException("Part not found");
     }
 
-    public Product lookupProduct(int productId) {
+    public static Product lookupProduct(int productId) {
         Iterator<Product> itr = allProducts.listIterator();
         while(itr.hasNext()) {
             Product prod = itr.next();
@@ -47,7 +47,7 @@ public class Inventory {
         throw new NoSuchElementException("Product not found");
     }
 
-    public ObservableList<Product> lookupProduct(String productName) {
+    public static ObservableList<Product> lookupProduct(String productName) {
         Iterator<Product> itr = allProducts.listIterator();
         ObservableList<Product> subList = FXCollections.observableArrayList();
         while(itr.hasNext()) {
@@ -60,15 +60,15 @@ public class Inventory {
         throw new NoSuchElementException("Product not found");
     }
 
-    public void updatePart(int index, Part part) { allParts.set(index, part); }
+    public static void updatePart(int index, Part part) { allParts.set(index, part); }
 
-    public void updateProduct(int index, Product product) { allProducts.set(index, product); }
+    public static void updateProduct(int index, Product product) { allProducts.set(index, product); }
 
-    public void deletePart(Part part) { allParts.remove(part); }
+    public static void deletePart(Part part) { allParts.remove(part); }
 
-    public void deleteProduct(Product product) { allProducts.remove(product); }
+    public static void deleteProduct(Product product) { allProducts.remove(product); }
 
-    public ObservableList<Part> getAllParts() { return allParts; }
+    public static ObservableList<Part> getAllParts() { return allParts; }
 
-    public ObservableList<Product> getAllProducts() { return allProducts; }
+    public static ObservableList<Product> getAllProducts() { return allProducts; }
 }
