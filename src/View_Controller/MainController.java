@@ -140,8 +140,10 @@ public class MainController implements Initializable {
     public void deletePartAction(ActionEvent event) {
         Optional<ButtonType> result = alertMe("Are you sure you want to delete the selected part?");
 
-        if(result.get() == ButtonType.OK)
+        if(result.get() == ButtonType.OK) {
             Inventory.deletePart(partTable.getSelectionModel().getSelectedItem());
+            searchPartsAction(event);
+        }
     }
 
     public void addProductAction(ActionEvent event) {
@@ -169,8 +171,10 @@ public class MainController implements Initializable {
     public void deleteProductAction(ActionEvent event) {
         Optional<ButtonType> result = alertMe("Are you sure you want to delete the selected product?");
 
-        if(result.get() == ButtonType.OK)
+        if(result.get() == ButtonType.OK) {
             Inventory.deleteProduct(productTable.getSelectionModel().getSelectedItem());
+            searchProductsAction(event);
+        }
     }
 
     public void exitApplication() {

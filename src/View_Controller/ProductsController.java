@@ -82,7 +82,7 @@ public class ProductsController implements Initializable {
         includedParts.setItems(product.getAllAssociatedParts());
     }
 
-    public void searchPartAction() {
+    public void searchPartAction(ActionEvent event) {
         String s = partSearchField.getText();
 
         if(!s.equals("") && s.charAt(0) != '-') {
