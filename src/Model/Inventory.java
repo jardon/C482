@@ -15,10 +15,8 @@ public class Inventory {
     public static void addProduct(Product product) { allProducts.add(product); }
 
     public static Part lookupPart(int partId) {
-        Iterator<Part> itr = allParts.listIterator();
-        while(itr.hasNext()) {
-            Part part = itr.next();
-            if(part.getId() == partId)
+        for (Part part : allParts) {
+            if (part.getId() == partId)
                 return part;
         }
         throw new NoSuchElementException("Part not found");
@@ -29,7 +27,7 @@ public class Inventory {
         ObservableList<Part> subList = FXCollections.observableArrayList();
         while(itr.hasNext()) {
             Part part = itr.next();
-            if(part.getName() == partName) {
+            if(part.getName().equals(partName)) {
                 subList.add(part);
                 return subList;
             }
@@ -38,10 +36,8 @@ public class Inventory {
     }
 
     public static Product lookupProduct(int productId) {
-        Iterator<Product> itr = allProducts.listIterator();
-        while(itr.hasNext()) {
-            Product prod = itr.next();
-            if(prod.getId() == productId)
+        for (Product prod : allProducts) {
+            if (prod.getId() == productId)
                 return prod;
         }
         throw new NoSuchElementException("Product not found");
@@ -52,7 +48,7 @@ public class Inventory {
         ObservableList<Product> subList = FXCollections.observableArrayList();
         while(itr.hasNext()) {
             Product prod = itr.next();
-            if(prod.getName() == productName) {
+            if(prod.getName().equals(productName)) {
                 subList.add(prod);
                 return subList;
             }

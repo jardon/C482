@@ -12,10 +12,12 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
-
 import java.net.URL;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 
@@ -46,19 +48,25 @@ public class ProductsController implements Initializable {
     @FXML private Label label;
     private Product product;
     ObservableList<Part> tempList = FXCollections.observableArrayList();
+    ObservableList<Part> searchList = FXCollections.observableArrayList();
+    private static int idCount = 0;
 
     public void initialize(URL url, ResourceBundle rb) {
         foundId.setCellValueFactory(new PropertyValueFactory<Part, String>("id"));
         foundName.setCellValueFactory(new PropertyValueFactory<Part, String>("name"));
         foundStock.setCellValueFactory(new PropertyValueFactory<Part, String>("stock"));
         foundPrice.setCellValueFactory(new PropertyValueFactory<Part, String>("price"));
-        foundParts.setItems(Inventory.getAllParts());
+        searchList.setAll(Inventory.getAllParts());
+        foundParts.setItems(searchList);
 
         includedId.setCellValueFactory(new PropertyValueFactory<Part, String>("id"));
         includedName.setCellValueFactory(new PropertyValueFactory<Part, String>("name"));
         includedStock.setCellValueFactory(new PropertyValueFactory<Part, String>("stock"));
         includedPrice.setCellValueFactory(new PropertyValueFactory<Part, String>("price"));
         includedParts.setItems(tempList);
+
+        id.setText("Auto Gen - Disabled");
+        id.setDisable(true);
     }
 
     public void initData(Product product) {
@@ -75,6 +83,28 @@ public class ProductsController implements Initializable {
     }
 
     public void searchPartAction() {
+        String s = partSearchField.getText();
+
+        if(!s.equals("") && s.charAt(0) != '-') {
+            try {
+                searchList.removeAll(searchList);
+                searchList.add(Inventory.lookupPart(Integer.parseInt(s)));
+            }
+
+            catch (Exception e) {
+                System.out.println(e);
+                if (e instanceof NumberFormatException)
+                    try {
+                        searchList.setAll(Inventory.lookupPart(s));
+                    }
+                    catch (NoSuchElementException nse) {
+                        searchList.setAll(FXCollections.observableArrayList());
+                        System.out.println(nse);
+                    }
+            }
+        }
+        else
+            searchList.setAll(Inventory.getAllParts());
         
     }
 
@@ -86,49 +116,76 @@ public class ProductsController implements Initializable {
     }
 
     public void deletePartAction(ActionEvent event) {
-        if(product != null)
-            product.deleteAssociatedPart(includedParts.getSelectionModel().getSelectedItem());
-        else
-            tempList.remove(includedParts.getSelectionModel().getSelectedItem());
+        Optional<ButtonType> result = alertMe("Are you sure you want to remove the selected part?");
+
+        if(result.get() == ButtonType.OK) {
+            if (product != null)
+                product.deleteAssociatedPart(includedParts.getSelectionModel().getSelectedItem());
+            else
+                tempList.remove(includedParts.getSelectionModel().getSelectedItem());
+        }
     }
 
     public void saveAction(ActionEvent event) {
-        if(product == null) {
-            product = new Product(
-                    Integer.parseInt(id.getText()),
-                    name.getText(),
-                    Double.parseDouble(price.getText()),
-                    Integer.parseInt(stock.getText()),
-                    Integer.parseInt(min.getText()),
-                    Integer.parseInt(max.getText()));
+        if(validNumbers()) {
+            if (product == null) {
+                product = new Product(
+                        idCount++,
+                        name.getText(),
+                        Double.parseDouble(price.getText()),
+                        Integer.parseInt(stock.getText()),
+                        Integer.parseInt(min.getText()),
+                        Integer.parseInt(max.getText()));
 
-            for (Part part : tempList)
-                product.addAssociatedPart(part);
+                for (Part part : tempList)
+                    product.addAssociatedPart(part);
 
-            Inventory.addProduct(product);
+                Inventory.addProduct(product);
+            } else {
+                product.setName(name.getText());
+                product.setPrice(Double.parseDouble(price.getText()));
+                product.setStock(Integer.parseInt(stock.getText()));
+                product.setMin(Integer.parseInt(min.getText()));
+                product.setMax(Integer.parseInt(max.getText()));
+            }
+
+            loadScene("MainController.fxml", event);
         }
-
         else {
-            product.setName(name.getText());
-            product.setPrice(Double.parseDouble(price.getText()));
-            product.setStock(Integer.parseInt(stock.getText()));
-            product.setMin(Integer.parseInt(min.getText()));
-            product.setMax(Integer.parseInt(max.getText()));
+            alertMe("Please enter the appropriate numerical values");
         }
-
-        cancelAction(event);
     }
 
     public void cancelAction(ActionEvent event) {
+        Optional<ButtonType> result = alertMe("Are you sure you want to cancel?");
+
+        if(result.get() == ButtonType.OK) {
+            loadScene("MainController.fxml", event);
+        }
+    }
+
+    private void loadScene(String destination, ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("MainController.fxml"));
-            Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(destination));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
             stage.setScene(new Scene(loader.load()));
             stage.show();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e);
         }
+    }
+
+    private boolean validNumbers() {
+        return Integer.parseInt(min.getText()) <= Integer.parseInt(max.getText())
+                && Integer.parseInt(stock.getText()) >= Integer.parseInt(min.getText())
+                && Integer.parseInt(stock.getText()) <= Integer.parseInt(max.getText());
+    }
+
+    private Optional<ButtonType> alertMe(String message) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION) ;
+        alert.initModality(Modality.NONE);
+        alert.setContentText(message);
+        return alert.showAndWait();
     }
 }

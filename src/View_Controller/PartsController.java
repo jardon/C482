@@ -12,9 +12,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class PartsController implements Initializable {
@@ -34,6 +36,7 @@ public class PartsController implements Initializable {
     @FXML private Label secondaryLabel;
     private ToggleGroup radioGroup;
     private Part part;
+    private static int idCount = 0;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -41,6 +44,8 @@ public class PartsController implements Initializable {
         inHouse.setToggleGroup(radioGroup);
         outsourced.setToggleGroup(radioGroup);
         secondaryLabel.setText("Disabled");
+        id.setText("Auto Gen - Disabled");
+        id.setDisable(true);
         secondary.setDisable(true);
         inHouse.selectedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
@@ -92,62 +97,85 @@ public class PartsController implements Initializable {
     }
 
     public void savePartAction(ActionEvent event) {
-        try {
-            if(part == null) {
-                if (radioGroup.getSelectedToggle().equals(inHouse))
-                    Inventory.addPart(new InHouse(
-                            Integer.parseInt(id.getText()),
-                            name.getText(),
-                            Double.parseDouble(price.getText()),
-                            Integer.parseInt(stock.getText()),
-                            Integer.parseInt(min.getText()),
-                            Integer.parseInt(max.getText()),
-                            Integer.parseInt(secondary.getText())));
+        if(validNumbers()) {
+            try {
+                if (part == null) {
+                    if (radioGroup.getSelectedToggle().equals(inHouse))
+                        Inventory.addPart(new InHouse(
+                                idCount++,
+                                name.getText(),
+                                Double.parseDouble(price.getText()),
+                                Integer.parseInt(stock.getText()),
+                                Integer.parseInt(min.getText()),
+                                Integer.parseInt(max.getText()),
+                                Integer.parseInt(secondary.getText())));
 
-                else if (radioGroup.getSelectedToggle().equals(outsourced))
-                    Inventory.addPart(new Outsourced(
-                            Integer.parseInt(id.getText()),
-                            name.getText(),
-                            Double.parseDouble(price.getText()),
-                            Integer.parseInt(stock.getText()),
-                            Integer.parseInt(min.getText()),
-                            Integer.parseInt(max.getText()),
-                            secondary.getText()));
-                else
-                    System.out.println("No radio button selected.");
-            }
-            else {
-                part.setName(name.getText());
-                part.setPrice(Double.parseDouble(price.getText()));
-                part.setStock(Integer.parseInt(stock.getText()));
-                part.setMin(Integer.parseInt(min.getText()));
-                part.setMax(Integer.parseInt(max.getText()));
+                    else if (radioGroup.getSelectedToggle().equals(outsourced))
+                        Inventory.addPart(new Outsourced(
+                                idCount++,
+                                name.getText(),
+                                Double.parseDouble(price.getText()),
+                                Integer.parseInt(stock.getText()),
+                                Integer.parseInt(min.getText()),
+                                Integer.parseInt(max.getText()),
+                                secondary.getText()));
+                    else
+                        System.out.println("No radio button selected.");
+                } else {
+                    part.setName(name.getText());
+                    part.setPrice(Double.parseDouble(price.getText()));
+                    part.setStock(Integer.parseInt(stock.getText()));
+                    part.setMin(Integer.parseInt(min.getText()));
+                    part.setMax(Integer.parseInt(max.getText()));
 
-                if(part.getClass() == InHouse.class)
-                    ((InHouse) part).setMachineId(Integer.parseInt(secondary.getText()));
-                else if(part.getClass() == Outsourced.class)
-                    ((Outsourced) part).setCompanyName(secondary.getText());
-                else
-                    System.out.println("Unable to determine Part subclass.");
-            }
-        }
-            catch (Exception e) {
+                    if (part.getClass() == InHouse.class)
+                        ((InHouse) part).setMachineId(Integer.parseInt(secondary.getText()));
+                    else if (part.getClass() == Outsourced.class)
+                        ((Outsourced) part).setCompanyName(secondary.getText());
+                    else
+                        System.out.println("Unable to determine Part subclass.");
+                }
+            } catch (Exception e) {
                 System.out.println(e);
             }
 
-        cancelAction(event);
+            loadScene("MainController.fxml", event);
+
+        }
+        else
+            alertMe("Please provide appropriate numerical values");
     }
 
     public void cancelAction(ActionEvent event) {
+        Optional<ButtonType> result = alertMe("Are you sure you want to cancel");
+
+        if(result.get() == ButtonType.OK) {
+            loadScene("MainController.fxml", event);
+        }
+    }
+
+    private void loadScene(String destination, ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("MainController.fxml"));
-            Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(destination));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
             stage.setScene(new Scene(loader.load()));
             stage.show();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e);
         }
+    }
+
+    private boolean validNumbers() {
+        return Integer.parseInt(min.getText()) <= Integer.parseInt(max.getText())
+                && Integer.parseInt(stock.getText()) >= Integer.parseInt(min.getText())
+                && Integer.parseInt(stock.getText()) <= Integer.parseInt(max.getText());
+    }
+
+    private Optional<ButtonType> alertMe(String message) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION) ;
+        alert.initModality(Modality.NONE);
+        alert.setContentText(message);
+        return alert.showAndWait();
     }
 }
