@@ -83,14 +83,14 @@ public class PartsController implements Initializable {
 
         if(part.getClass() == InHouse.class) {
             inHouse.setSelected(true);
-            outsourced.setDisable(true);
+//            outsourced.setDisable(true);
             secondaryLabel.setText("MachineID");
             secondary.setText(Integer.toString(((InHouse) part).getMachineId()));
         }
 
         if(part.getClass() == Outsourced.class) {
             outsourced.setSelected(true);
-            inHouse.setDisable(true);
+//            inHouse.setDisable(true);
             secondaryLabel.setText("Company Name");
             secondary.setText(((Outsourced) part).getCompanyName());
         }
@@ -121,17 +121,29 @@ public class PartsController implements Initializable {
                                 secondary.getText()));
                     else
                         System.out.println("No radio button selected.");
-                } else {
-                    part.setName(name.getText());
-                    part.setPrice(Double.parseDouble(price.getText()));
-                    part.setStock(Integer.parseInt(stock.getText()));
-                    part.setMin(Integer.parseInt(min.getText()));
-                    part.setMax(Integer.parseInt(max.getText()));
+                }
+                else {
+                    Inventory.deletePart(part);
 
-                    if (part.getClass() == InHouse.class)
-                        ((InHouse) part).setMachineId(Integer.parseInt(secondary.getText()));
-                    else if (part.getClass() == Outsourced.class)
-                        ((Outsourced) part).setCompanyName(secondary.getText());
+                    if (radioGroup.getSelectedToggle().equals(inHouse))
+                        Inventory.addPart(new InHouse(
+                                Integer.parseInt(id.getText()),
+                                name.getText(),
+                                Double.parseDouble(price.getText()),
+                                Integer.parseInt(stock.getText()),
+                                Integer.parseInt(min.getText()),
+                                Integer.parseInt(max.getText()),
+                                Integer.parseInt(secondary.getText())));
+
+                    else if (radioGroup.getSelectedToggle().equals(outsourced))
+                        Inventory.addPart(new Outsourced(
+                                Integer.parseInt(id.getText()),
+                                name.getText(),
+                                Double.parseDouble(price.getText()),
+                                Integer.parseInt(stock.getText()),
+                                Integer.parseInt(min.getText()),
+                                Integer.parseInt(max.getText()),
+                                secondary.getText()));
                     else
                         System.out.println("Unable to determine Part subclass.");
                 }
