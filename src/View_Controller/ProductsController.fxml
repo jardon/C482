@@ -9,43 +9,47 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View_Controller.ProductsController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View_Controller.ProductsController">
    <children>
-      <HBox layoutY="6.0" prefHeight="390.0" prefWidth="600.0">
+      <HBox layoutY="6.0" prefHeight="592.0" prefWidth="800.0">
          <children>
-            <VBox prefHeight="331.0" prefWidth="262.0">
+            <VBox prefHeight="592.0" prefWidth="290.0">
                <children>
-                  <Label text="Add Product">
+                  <Label fx:id="label" text="Add Product">
                      <VBox.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </VBox.margin></Label>
+                     </VBox.margin>
+                     <font>
+                        <Font size="18.0" />
+                     </font></Label>
                   <HBox prefHeight="180.0" prefWidth="259.0">
                      <children>
                         <VBox prefHeight="200.0" prefWidth="100.0">
                            <children>
                               <Label text="ID">
                                  <VBox.margin>
-                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                    <Insets bottom="11.0" left="11.0" right="11.0" top="19.0" />
                                  </VBox.margin>
                                  <HBox.margin>
                                     <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                                  </HBox.margin></Label>
                               <Label text="Name">
                                  <VBox.margin>
-                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                    <Insets bottom="11.0" left="11.0" right="11.0" top="11.0" />
                                  </VBox.margin></Label>
                               <Label text="Inv">
                                  <VBox.margin>
-                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                    <Insets bottom="11.0" left="11.0" right="11.0" top="11.0" />
                                  </VBox.margin></Label>
                               <Label text="Price">
                                  <VBox.margin>
-                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                    <Insets bottom="11.0" left="11.0" right="11.0" top="11.0" />
                                  </VBox.margin></Label>
                               <Label text="Max">
                                  <VBox.margin>
-                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                    <Insets bottom="11.0" left="11.0" right="11.0" top="11.0" />
                                  </VBox.margin></Label>
                            </children>
                         </VBox>
@@ -59,7 +63,7 @@
                                  <VBox.margin>
                                     <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                                  </VBox.margin></TextField>
-                              <TextField fx:id="inventory">
+                              <TextField fx:id="stock">
                                  <VBox.margin>
                                     <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                                  </VBox.margin></TextField>
@@ -69,13 +73,22 @@
                                  </VBox.margin></TextField>
                               <HBox prefHeight="100.0" prefWidth="200.0">
                                  <children>
-                                    <TextField fx:id="max" prefHeight="26.0" prefWidth="56.0" />
-                                    <Label text="Min" />
-                                    <TextField fx:id="min" prefHeight="26.0" prefWidth="71.0" />
+                                    <TextField fx:id="max" prefHeight="26.0" prefWidth="43.0">
+                                       <HBox.margin>
+                                          <Insets left="10.0" />
+                                       </HBox.margin></TextField>
+                                    <Label text="Min">
+                                       <padding>
+                                          <Insets left="10.0" right="10.0" top="5.0" />
+                                       </padding></Label>
+                                    <TextField fx:id="min" prefHeight="26.0" prefWidth="46.0" />
                                  </children>
                                  <HBox.margin>
                                     <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                                  </HBox.margin>
+                                 <VBox.margin>
+                                    <Insets top="8.0" />
+                                 </VBox.margin>
                               </HBox>
                            </children>
                         </VBox>
@@ -83,32 +96,60 @@
                   </HBox>
                </children>
             </VBox>
-            <VBox prefHeight="373.0" prefWidth="341.0">
+            <VBox prefHeight="592.0" prefWidth="538.0">
                <children>
                   <HBox prefHeight="51.0" prefWidth="341.0">
                      <children>
-                        <Button fx:id="partSearch" mnemonicParsing="false" onAction="#searchPartAction" text="Search" />
-                        <TextField fx:id="partSearchField" />
+                        <Button fx:id="partSearch" mnemonicParsing="false" onAction="#searchPartAction" text="Search">
+                           <HBox.margin>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </HBox.margin></Button>
+                        <TextField fx:id="partSearchField">
+                           <HBox.margin>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </HBox.margin></TextField>
                      </children>
                   </HBox>
-                  <TableView fx:id="foundParts" prefHeight="106.0" prefWidth="341.0">
+                  <TableView fx:id="foundParts" prefHeight="162.0" prefWidth="504.0">
                     <columns>
-                      <TableColumn prefWidth="75.0" text="C1" />
-                      <TableColumn prefWidth="75.0" text="C2" />
+                      <TableColumn fx:id="foundId" prefWidth="125.0" text="Part ID" />
+                      <TableColumn fx:id="foundName" prefWidth="125.0" text="Part Name" />
+                        <TableColumn fx:id="foundStock" prefWidth="125.0" text="Inventory" />
+                        <TableColumn fx:id="foundPrice" prefWidth="125.0" text="Cost per Unit" />
                     </columns>
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </VBox.margin>
                   </TableView>
-                  <Button fx:id="partAdd" mnemonicParsing="false" onAction="#addPartAction" text="Add" />
-                  <TableView fx:id="includedParts" prefHeight="101.0" prefWidth="341.0">
+                  <Button fx:id="partAdd" mnemonicParsing="false" onAction="#addPartAction" text="Add">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </VBox.margin></Button>
+                  <TableView fx:id="includedParts" prefHeight="155.0" prefWidth="504.0">
                     <columns>
-                      <TableColumn prefWidth="75.0" text="C1" />
-                      <TableColumn prefWidth="75.0" text="C2" />
+                      <TableColumn fx:id="includedId" prefWidth="125.0" text="Part ID" />
+                      <TableColumn fx:id="includedName" prefWidth="125.0" text="Part Name" />
+                        <TableColumn fx:id="includedStock" prefWidth="125.0" text="Inventory" />
+                        <TableColumn fx:id="includedPrice" prefWidth="125.0" text="Cost per Unit" />
                     </columns>
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </VBox.margin>
                   </TableView>
-                  <Button fx:id="partDelete" mnemonicParsing="false" onAction="#deletePartAction" text="Delete" />
-                  <HBox prefHeight="43.0" prefWidth="340.0">
+                  <Button fx:id="partDelete" mnemonicParsing="false" onAction="#deletePartAction" text="Delete">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </VBox.margin></Button>
+                  <HBox prefHeight="88.0" prefWidth="524.0">
                      <children>
-                        <Button fx:id="save" mnemonicParsing="false" onAction="#saveAction" text="Save" />
-                        <Button fx:id="cancel" mnemonicParsing="false" onAction="#cancelAction" text="Cancel" />
+                        <Button fx:id="save" mnemonicParsing="false" onAction="#saveAction" text="Save">
+                           <HBox.margin>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </HBox.margin></Button>
+                        <Button fx:id="cancel" mnemonicParsing="false" onAction="#cancelAction" text="Cancel">
+                           <HBox.margin>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </HBox.margin></Button>
                      </children>
                   </HBox>
                </children>
