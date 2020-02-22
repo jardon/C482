@@ -40,11 +40,6 @@ public class ProductsController implements Initializable {
     @FXML private TableColumn<Part, String> includedName;
     @FXML private TableColumn<Part, String> includedStock;
     @FXML private TableColumn<Part, String> includedPrice;
-    @FXML private Button partSearch;
-    @FXML private Button partAdd;
-    @FXML private Button partDelete;
-    @FXML private Button save;
-    @FXML private Button cancel;
     @FXML private Label label;
     private Product product;
     ObservableList<Part> tempList = FXCollections.observableArrayList();

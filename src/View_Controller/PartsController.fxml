@@ -119,12 +119,12 @@
             </HBox>
             <HBox prefHeight="55.0" prefWidth="781.0">
                <children>
-                  <Button fx:id="save" mnemonicParsing="false" onAction="#savePartAction" text="Save">
+                  <Button mnemonicParsing="false" onAction="#savePartAction" text="Save">
                      <HBox.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="cancel" mnemonicParsing="false" onAction="#cancelAction" text="Cancel">
+                  <Button mnemonicParsing="false" onAction="#cancelAction" text="Cancel">
                      <HBox.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </HBox.margin>

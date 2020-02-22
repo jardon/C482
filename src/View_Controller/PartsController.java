@@ -21,8 +21,6 @@ import java.util.ResourceBundle;
 
 public class PartsController implements Initializable {
 
-    @FXML private Button save;
-    @FXML private Button cancel;
     @FXML private RadioButton inHouse;
     @FXML private RadioButton outsourced;
     @FXML private TextField id;

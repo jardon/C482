@@ -27,15 +27,6 @@ public class MainController implements Initializable {
     @FXML private TextField productSearchField;
     @FXML private TableView<Part> partTable;
     @FXML private TableView<Product> productTable;
-    @FXML private Button partSearch;
-    @FXML private Button productSearch;
-    @FXML private Button partAdd;
-    @FXML private Button partModify;
-    @FXML private Button partDelete;
-    @FXML private Button productAdd;
-    @FXML private Button productModify;
-    @FXML private Button productDelete;
-    @FXML private Button exit;
     @FXML private TableColumn<Part, String> partId;
     @FXML private TableColumn<Part, String> partName;
     @FXML private TableColumn<Part, String> partPrice;
